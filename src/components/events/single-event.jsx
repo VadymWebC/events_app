@@ -18,13 +18,16 @@ const SingleEvent = ({ data }) => {
         }
 
         try {
-            const response = await fetch('/api/email-registration', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: emailValue, eventId }),
-            })
+            const response = await fetch(
+                `${process.env.API_HOST}/email-registration`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: emailValue, eventId }),
+                }
+            )
             if (!response.ok) throw new Error(`Error: ${response.status}`)
             const data = await response.json()
             setMessage(data.message)
