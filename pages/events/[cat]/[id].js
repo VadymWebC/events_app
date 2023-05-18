@@ -8,7 +8,9 @@ function EventPage({ data }) {
 export default EventPage
 
 export async function getStaticPaths() {
-    const data = await import('/tmp/data.json')
+    const data = await import(
+        '/' + process.env.NEXT_PUBLIC_DATA_DIR + '/data.json'
+    )
     const allEvents = data.allEvents
     const allPaths = allEvents.map((path) => {
         return {
@@ -28,7 +30,9 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     try {
         const id = context.params.id
-        const { allEvents } = await import('/tmp/data.json')
+        const { allEvents } = await import(
+            '/' + process.env.NEXT_PUBLIC_DATA_DIR + '/data.json'
+        )
         const eventData = allEvents.find((ev) => id === ev.id)
 
         return {

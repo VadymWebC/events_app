@@ -2,7 +2,11 @@ import path from 'path'
 import fs from 'fs'
 
 function buildPath() {
-    return path.join(process.cwd(), 'tmp', 'data.json')
+    return path.join(
+        process.cwd(),
+        process.env.NEXT_PUBLIC_DATA_DIR,
+        'data.json'
+    )
 }
 
 function extractData(filePath) {
