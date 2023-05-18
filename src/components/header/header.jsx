@@ -27,7 +27,9 @@ export default function Header() {
                         </ul>
                     </nav>
                 </div>
-                <p className="title">Asthounoshing develpers conference</p>
+                <p className="title">
+                    {process.env.API_HOST} Asthounoshing develpers conference
+                </p>
             </div>
         </header>
     )
