@@ -23,38 +23,38 @@ export default function handler(req, res) {
         })
     }
     if (method === 'POST') {
-        res.status(200).json({
-            message: `test filepath: ${filePath}`,
+        // res.status(200).json({
+        //     message: `test filepath: ${filePath}`,
+        // })
+
+        const { email, eventId } = req.body
+        if (!email | !email.includes('@')) {
+            res.status(422).json({ message: 'Invalid email address' })
+            return
+        }
+        const newAllEvents = allEvents.map((ev) => {
+            if (ev.id === eventId) {
+                if (ev.emails_registered.includes(email)) {
+                    res.status(409).json({
+                        message: 'This email has already been registered',
+                    })
+                    return ev
+                }
+                return {
+                    ...ev,
+                    emails_registered: [...ev.emails_registered, email],
+                }
+            }
+            return ev
         })
 
-        // const { email, eventId } = req.body
-        // if (!email | !email.includes('@')) {
-        //     res.status(422).json({ message: 'Invalid email address' })
-        //     return
-        // }
-        // const newAllEvents = allEvents.map((ev) => {
-        //     if (ev.id === eventId) {
-        //         if (ev.emails_registered.includes(email)) {
-        //             res.status(409).json({
-        //                 message: 'This email has already been registered',
-        //             })
-        //             return ev
-        //         }
-        //         return {
-        //             ...ev,
-        //             emails_registered: [...ev.emails_registered, email],
-        //         }
-        //     }
-        //     return ev
-        // })
+        fs.writeFileSync(
+            filePath,
+            JSON.stringify({ events_categories, allEvents: newAllEvents })
+        )
 
-        // fs.writeFileSync(
-        //     filePath,
-        //     JSON.stringify({ events_categories, allEvents: newAllEvents })
-        // )
-
-        // res.status(200).json({
-        //     message: `You has been registred successfully with the email: ${email} for the event ${eventId}`,
-        // })
+        res.status(200).json({
+            message: `You has been registred successfully with the email: ${email} for the event ${eventId}`,
+        })
     }
 }
