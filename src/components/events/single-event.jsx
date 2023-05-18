@@ -28,8 +28,23 @@ const SingleEvent = ({ data }) => {
                     body: JSON.stringify({ email: emailValue, eventId }),
                 }
             )
-            if (!response.ok) throw new Error(`Error: ${response.status}`)
-            const data = await response.json()
+
+            let data = null
+            if (!response.ok) {
+                if (response.status === 409) {
+                    data = await response.json()
+                    if (
+                        data.message ===
+                        'This email has already been registered'
+                    ) {
+                        setMessage(data.message)
+                    }
+                    throw new Error(`Error: ${data.message}`)
+                } else {
+                    throw new Error(`Error: ${response.status}`)
+                }
+            }
+            data = await response.json()
             setMessage(data.message)
             inputEmail.current.value = ''
         } catch (e) {
