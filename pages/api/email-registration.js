@@ -34,16 +34,17 @@ export default function handler(req, res) {
         }
         const newAllEvents = allEvents.map((ev) => {
             if (ev.id === eventId) {
+                console.log('ЧПОК')
                 // if (ev.emails_registered.includes(email)) {
                 //     res.status(409).json({
                 //         message: 'This email has already been registered',
                 //     })
                 //     return ev
                 // }
-                // return {
-                //     ...ev,
-                //     emails_registered: [...ev.emails_registered, email],
-                // }
+                return {
+                    ...ev,
+                    emails_registered: [...ev.emails_registered, email],
+                }
             }
             return ev
         })
