@@ -15,13 +15,13 @@ export default function handler(req, res) {
 
     const filePath = buildPath()
 
-    // const { events_categories, allEvents } = extractData(filePath)
+    const { events_categories, allEvents } = extractData(filePath)
 
-    // if (!allEvents) {
-    //     return res.status(404).json({
-    //         message: 'Events data not found',
-    //     })
-    // }
+    if (!allEvents) {
+        return res.status(404).json({
+            message: 'Events data not found',
+        })
+    }
     if (method === 'POST') {
         res.status(200).json({
             message: `test filepath: ${filePath}`,
