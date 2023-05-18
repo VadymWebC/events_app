@@ -18,16 +18,8 @@ const SingleEvent = ({ data }) => {
         }
 
         try {
-            const try_this_path = `${process.env.API_HOST}/email-registration`
-
-            console.log('try this path')
-            console.log(try_this_path)
-            console.log(process)
-            console.log(process.env)
-            console.log(process.env.NEXT_PUBLIC_G_KEY)
-
             const response = await fetch(
-                `${process.env.API_HOST}/email-registration`,
+                `${process.env.NEXT_PUBLIC_API_HOST}/email-registration`,
                 {
                     method: 'POST',
                     headers: {
