@@ -49,7 +49,7 @@ export default function handler(req, res) {
         )
 
         res.status(200).json({
-            message: `You has been registred successfully with the email: ${email} ${eventId}`,
+            message: `You has been registred successfully with the email: ${email} for the event ${eventId}`,
         })
     }
 }

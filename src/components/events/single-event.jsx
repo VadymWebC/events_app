@@ -27,8 +27,8 @@ const SingleEvent = ({ data }) => {
             })
             if (!response.ok) throw new Error(`Error: ${response.status}`)
             const data = await response.json()
-            console.log(`POST: ${data}`)
-            console.log(data)
+            setMessage(data.message)
+            inputEmail.current.value = ''
         } catch (e) {
             console.log('ERROR', e)
         }
