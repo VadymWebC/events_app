@@ -26,11 +26,17 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-    const id = context.params.id
-    const { allEvents } = await import('/data/data.json')
-    const eventData = allEvents.find((ev) => id === ev.id)
+    try {
+        const id = context.params.id
+        const { allEvents } = await import('/data/data.json')
+        const eventData = allEvents.find((ev) => id === ev.id)
 
-    return {
-        props: { data: eventData },
+        return {
+            props: { data: eventData },
+        }
+    } catch {
+        return {
+            props: { data: null },
+        }
     }
 }

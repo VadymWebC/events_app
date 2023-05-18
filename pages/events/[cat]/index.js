@@ -23,9 +23,13 @@ export const getStaticPaths = async () => {
 }
 
 export async function getStaticProps(context) {
-    const id = context?.params.cat
-    const { allEvents } = await import('/data/data.json')
-    const data = allEvents.filter((ev) => ev.city === id)
+    try {
+        const id = context?.params.cat
+        const { allEvents } = await import('/data/data.json')
+        const data = allEvents.filter((ev) => ev.city === id)
 
-    return { props: { data, pageName: id } }
+        return { props: { data, pageName: id } }
+    } catch {
+        return { props: { data: null, pageName: null } }
+    }
 }
