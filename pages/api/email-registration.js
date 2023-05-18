@@ -23,21 +23,16 @@ export default function handler(req, res) {
         })
     }
     if (method === 'POST') {
-        // res.status(200).json({
-        //     message: `test filepath: ${filePath}`,
-        // })
-
         const { email, eventId } = req.body
         if (!email | !email.includes('@')) {
             res.status(422).json({ message: 'Invalid email address' })
             return
         }
+        let duplicate_email_flag = false
         const newAllEvents = allEvents.map((ev) => {
             if (ev.id === eventId) {
                 if (ev.emails_registered.includes(email)) {
-                    // res.status(409).json({
-                    //     message: 'This email has already been registered',
-                    // })
+                    duplicate_email_flag = true
                     return ev
                 }
                 return {
@@ -48,16 +43,20 @@ export default function handler(req, res) {
             return ev
         })
 
-        console.log(newAllEvents)
+        if (duplicate_email_flag) {
+            res.status(409).json({
+                message: 'This email has already been registered',
+            })
+        } else {
+            fs.writeFileSync(
+                filePath,
+                JSON.stringify({ events_categories, allEvents: newAllEvents })
+            )
 
-        // fs.writeFileSync(
-        //     filePath,
-        //     JSON.stringify({ events_categories, allEvents: newAllEvents })
-        // )
-
-        res.status(200).json({
-            message: `You has been registred successfully with the email: ${email} for the event ${eventId}`,
-            datares: newAllEvents,
-        })
+            res.status(200).json({
+                message: `You has been registred successfully with the email: ${email} for the event ${eventId}`,
+                datares: newAllEvents,
+            })
+        }
     }
 }
