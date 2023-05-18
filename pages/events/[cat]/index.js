@@ -8,7 +8,7 @@ const EventsCatPage = ({ data, pageName }) => (
 export default EventsCatPage
 
 export const getStaticPaths = async () => {
-    const { events_categories } = await import('/data/data.json')
+    const { events_categories } = await import('/tmp/data.json')
     const allPaths = events_categories.map((ev) => {
         return {
             params: {
@@ -25,7 +25,7 @@ export const getStaticPaths = async () => {
 export async function getStaticProps(context) {
     try {
         const id = context?.params.cat
-        const { allEvents } = await import('/data/data.json')
+        const { allEvents } = await import('/tmp/data.json')
         const data = allEvents.filter((ev) => ev.city === id)
 
         return { props: { data, pageName: id } }
