@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Header() {
+    const apiroute = process.env.API_HOST
     return (
         <header>
             <div>
@@ -28,8 +29,9 @@ export default function Header() {
                     </nav>
                 </div>
                 <p className="title">
-                    {process.env.API_HOST} Asthounoshing develpers conference
+                    {apiroute} Asthounoshing develpers conference
                 </p>
+                <div>{apiroute}</div>
             </div>
         </header>
     )
