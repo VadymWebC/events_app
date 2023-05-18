@@ -24,6 +24,7 @@ const SingleEvent = ({ data }) => {
             console.log(try_this_path)
             console.log(process)
             console.log(process.env)
+            console.log(process.env.NEXT_PUBLIC_G_KEY)
 
             const response = await fetch(
                 `${process.env.API_HOST}/email-registration`,
